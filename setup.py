@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='The Circuit Toy',
-    version='1.0.0',
+    version='1.0.1',
     packages=[''],
     url='',
     license='',
@@ -11,4 +11,6 @@ setup(
     description='The Circuit Toy! with inspiration from the powder toy'
 )
 
-#1.0.0 Needs lots of testing
+#1.0.0, Needs lots of testing
+
+#1.0.1, save, load

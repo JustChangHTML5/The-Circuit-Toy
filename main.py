@@ -101,6 +101,22 @@ class CircuitGame:
                     else:
                         gv.showGrid = True
 
+                if event.key == pygame.K_s:
+                    gv.GameF.save("CircuitSave")
+                    gv.GameF.save("CircuitSaveBackup")
+
+                if event.key == pygame.K_l:
+                    try:
+                        gv.GameF = gv.GameF.load("CircuitSave")
+
+                    except:
+                        gv.GameF = gv.GameF.load("CircuitSaveBackup")
+                    gv.Game.transmit(gv.GameF)
+                    gv.Game.NodesData = gv.GameF.NodesData
+                    gv.Game.sizeX, gv.Game.sizeY, gv.Game.size = gv.GameF.sizeX, gv.GameF.sizeY, gv.GameF.size
+                    gv.width = gv.GameF.sizeX
+                    gv.height = gv.GameF.sizeY
+
             if event.type == pygame.QUIT:
                 pygame.display.quit(), sys.exit()
 
@@ -130,6 +146,23 @@ class CircuitGame:
         #fps
 def main():
     Circuit = CircuitGame()
+    notNew = True
+    try:
+        gv.GameF = gv.GameF.load("CircuitSave")
+
+    except:
+        try:
+            gv.GameF = gv.GameF.load("CircuitSaveBackup")
+        except:
+            notNew = False
+
+    if notNew:
+        gv.Game.transmit(gv.GameF)
+        gv.Game.NodesData = gv.GameF.NodesData
+        gv.Game.sizeX, gv.Game.sizeY, gv.Game.size = gv.GameF.sizeX, gv.GameF.sizeY, gv.GameF.size
+        gv.width = gv.GameF.sizeX
+        gv.height = gv.GameF.sizeY
+
     while True:
         clock.tick(70)
         gv.screen.fill(gv.boardColor)
