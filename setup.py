@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='The Circuit Toy',
-    version='1.0.1',
+    version='1.1.0',
     packages=[''],
     url='',
     license='',
@@ -14,3 +14,5 @@ setup(
 #1.0.0, Needs lots of testing
 
 #1.0.1, save, load
+
+#1.1.0, And Gates!

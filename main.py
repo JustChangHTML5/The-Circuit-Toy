@@ -37,12 +37,16 @@ def check(node):
             if 2 in neighbors or 3 in neighbors or 5 in neighbors or 7 in neighbors:
                 node.key = 2
 
-        if node.key == 4:
-            if 1 not in neighbors or 4 not in neighbors or 6 not in neighbors:
+        if node.key == 4 or node.key == 5:
+            check = 0
+            for neighbor in neighbors:
+                if neighbor == 2 or neighbor == 3 or neighbor == 5 or neighbor == 7 or neighbor == 8 or neighbor == 9:
+                    check += 1
+
+            if check >= 2:
                 node.key = 5
 
-        if node.key == 5:
-            if 1 in neighbors or 4 in neighbors or 6 in neighbors:
+            else:
                 node.key = 4
 
     else:
@@ -93,6 +97,11 @@ class CircuitGame:
                 if event.key == pygame.K_c:
                     for node in gv.GameF.Nodes:
                         node.key = 0
+
+                if event.key == pygame.K_a:
+                    (Mx, My) = pygame.mouse.get_pos()
+                    Nx, Ny = math.ceil(Mx / gv.sizeFactor), math.ceil(My / gv.sizeFactor)
+                    gv.GameF.get(Nx, Ny).key = 4
 
                 if event.key == pygame.K_g:
                     if gv.showGrid:
