@@ -49,6 +49,21 @@ def check(node):
             else:
                 node.key = 4
 
+        if node.key == 6 or node.key == 7:
+            pointer = 1
+            for neighbor in neighbors:
+                if neighbor == 2 or neighbor == 3 or neighbor == 5 or neighbor == 7 or neighbor == 8 or neighbor == 9:
+                    pointer += 1
+
+                elif neighbor == 1 or neighbor == 4 or neighbor == 6:
+                    pointer -= 1
+
+            if pointer <= 0:
+                node.key = 7
+
+            else:
+                node.key = 6
+
     else:
         return node
 
@@ -102,6 +117,11 @@ class CircuitGame:
                     (Mx, My) = pygame.mouse.get_pos()
                     Nx, Ny = math.ceil(Mx / gv.sizeFactor), math.ceil(My / gv.sizeFactor)
                     gv.GameF.get(Nx, Ny).key = 4
+
+                if event.key == pygame.K_n:
+                    (Mx, My) = pygame.mouse.get_pos()
+                    Nx, Ny = math.ceil(Mx / gv.sizeFactor), math.ceil(My / gv.sizeFactor)
+                    gv.GameF.get(Nx, Ny).key = 6
 
                 if event.key == pygame.K_g:
                     if gv.showGrid:
