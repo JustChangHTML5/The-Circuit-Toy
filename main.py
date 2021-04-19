@@ -10,14 +10,19 @@ gv.Game.NodesData = gv.GameF.NodesData
 def check(node):
     if node.key != 0 and node.key != 3:
         neighbors = []
-        neighbors.append(gv.Game.get(node.Xm - 1, node.Ym + 1).key)
+
         neighbors.append(gv.Game.get(node.Xm, node.Ym + 1).key)
-        neighbors.append(gv.Game.get(node.Xm + 1, node.Ym + 1).key)
+
         neighbors.append(gv.Game.get(node.Xm - 1, node.Ym).key)
         neighbors.append(gv.Game.get(node.Xm + 1, node.Ym).key)
-        neighbors.append(gv.Game.get(node.Xm - 1, node.Ym - 1).key)
+
         neighbors.append(gv.Game.get(node.Xm, node.Ym - 1).key)
-        neighbors.append(gv.Game.get(node.Xm + 1, node.Ym - 1).key)
+
+        if gv.ambientSprk:
+            neighbors.append(gv.Game.get(node.Xm - 1, node.Ym + 1).key)
+            neighbors.append(gv.Game.get(node.Xm + 1, node.Ym + 1).key)
+            neighbors.append(gv.Game.get(node.Xm - 1, node.Ym - 1).key)
+            neighbors.append(gv.Game.get(node.Xm + 1, node.Ym - 1).key)
 
         if node.key == 8:
             node.key = 1
@@ -105,6 +110,13 @@ class CircuitGame:
 
                     else:
                         gv.isRunning = True
+
+                if event.key == pygame.K_b:
+                    if gv.ambientSprk:
+                        gv.ambientSprk = False
+
+                    else:
+                        gv.ambientSprk = True
 
                 if event.key == pygame.K_f:
                     gv.frame = True
