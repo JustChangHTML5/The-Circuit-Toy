@@ -1,11 +1,14 @@
 import pygame, circuitMatrix
+
+pygame.init()
+
 width = 105
 height = 60
-sizeFactor = 10
+sizeFactor = 13
 isRunning = False
 frame = False
 showGrid = True
-showFPS = True
+showFPS = False
 ambientSprk = True
 boardColor = (0, 0, 0)
 transColor = (127, 127, 127)
@@ -22,3 +25,5 @@ GameF.build(width, height)
 pygame.display.set_caption("The Circuit Toy", "TCT")
 icon = pygame.image.load("TheCircuitToy.jpg")
 pygame.display.set_icon(icon)
+font = pygame.font.Font("pixelated.ttf", 17)
+#font = pygame.font.SysFont("comicsansms", 17)

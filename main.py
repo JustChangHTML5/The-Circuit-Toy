@@ -7,81 +7,82 @@ clock = pygame.time.Clock()
 gv.Game.NodesData = gv.GameF.NodesData
 
 # key0 = board, key1 = trans, key2 = sprk, key3 = battery, key4 = andGate, key5 = andsprk, key6 = notGate, key7 = notsprk, key8 = backtrans, key9 = backtrans2
-def check(node):
-    if node.key != 0 and node.key != 3:
-        neighbors = []
-
-        neighbors.append(gv.Game.get(node.Xm, node.Ym + 1).key)
-
-        neighbors.append(gv.Game.get(node.Xm - 1, node.Ym).key)
-        neighbors.append(gv.Game.get(node.Xm + 1, node.Ym).key)
-
-        neighbors.append(gv.Game.get(node.Xm, node.Ym - 1).key)
-
-        if gv.ambientSprk:
-            neighbors.append(gv.Game.get(node.Xm - 1, node.Ym + 1).key)
-            neighbors.append(gv.Game.get(node.Xm + 1, node.Ym + 1).key)
-            neighbors.append(gv.Game.get(node.Xm - 1, node.Ym - 1).key)
-            neighbors.append(gv.Game.get(node.Xm + 1, node.Ym - 1).key)
-
-        if node.key == 8:
-            node.key = 1
-
-        if node.key == 9:
-            node.key = 8
-
-        if node.key == 2 or node.key == 5 or node.key == 7:
-            if 2 not in neighbors or 3 not in neighbors or 5 not in neighbors or 7 not in neighbors:
-                if node.key != 2:
-                    node.key -= 1
-
-                else:
-                    node.key = 9
-
-        if node.key == 1:
-            if 2 in neighbors or 3 in neighbors or 5 in neighbors or 7 in neighbors:
-                node.key = 2
-
-        if node.key == 4 or node.key == 5:
-            check = 0
-            for neighbor in neighbors:
-                if neighbor == 2 or neighbor == 3 or neighbor == 5 or neighbor == 7 or neighbor == 8 or neighbor == 9:
-                    check += 1
-
-            if check >= 2:
-                node.key = 5
-
-            else:
-                node.key = 4
-
-        if node.key == 6 or node.key == 7:
-            pointer = 1
-            for neighbor in neighbors:
-                if neighbor == 2 or neighbor == 3 or neighbor == 5 or neighbor == 7 or neighbor == 8 or neighbor == 9:
-                    pointer += 1
-
-                elif neighbor == 1 or neighbor == 4 or neighbor == 6:
-                    pointer -= 1
-
-            if pointer <= 0:
-                node.key = 7
-
-            else:
-                node.key = 6
-
-    else:
-        return node
-
-    return node
 
 class CircuitGame:
     def __init__(self):
         pass
 
+    def check(self, node):
+        if node.key != 0 and node.key != 3:
+            neighbors = []
+
+            neighbors.append(gv.Game.get(node.Xm, node.Ym + 1).key)
+
+            neighbors.append(gv.Game.get(node.Xm - 1, node.Ym).key)
+            neighbors.append(gv.Game.get(node.Xm + 1, node.Ym).key)
+
+            neighbors.append(gv.Game.get(node.Xm, node.Ym - 1).key)
+
+            if gv.ambientSprk:
+                neighbors.append(gv.Game.get(node.Xm - 1, node.Ym + 1).key)
+                neighbors.append(gv.Game.get(node.Xm + 1, node.Ym + 1).key)
+                neighbors.append(gv.Game.get(node.Xm - 1, node.Ym - 1).key)
+                neighbors.append(gv.Game.get(node.Xm + 1, node.Ym - 1).key)
+
+            if node.key == 8:
+                node.key = 1
+
+            if node.key == 9:
+                node.key = 8
+
+            if node.key == 2 or node.key == 5 or node.key == 7:
+                if 2 not in neighbors or 3 not in neighbors or 5 not in neighbors or 7 not in neighbors:
+                    if node.key != 2:
+                        node.key -= 1
+
+                    else:
+                        node.key = 9
+
+            if node.key == 1:
+                if 2 in neighbors or 3 in neighbors or 5 in neighbors or 7 in neighbors:
+                    node.key = 2
+
+            if node.key == 4 or node.key == 5:
+                check = 0
+                for neighbor in neighbors:
+                    if neighbor == 2 or neighbor == 3 or neighbor == 5 or neighbor == 7 or neighbor == 8 or neighbor == 9:
+                        check += 1
+
+                if check >= 2:
+                    node.key = 5
+
+                else:
+                    node.key = 4
+
+            if node.key == 6 or node.key == 7:
+                pointer = 1
+                for neighbor in neighbors:
+                    if neighbor == 2 or neighbor == 3 or neighbor == 5 or neighbor == 7 or neighbor == 8 or neighbor == 9:
+                        pointer += 1
+
+                    elif neighbor == 1 or neighbor == 4 or neighbor == 6:
+                        pointer -= 1
+
+                if pointer <= 0:
+                    node.key = 7
+
+                else:
+                    node.key = 6
+
+        else:
+            return node
+
+        return node
+
     def update(self):
         gv.Game.transmit(gv.GameF)
         for node in gv.GameF.Nodes:
-            node = check(node)
+            node = self.check(node)
         gv.Game.transmit(gv.GameF)
         gv.frame = False
 
@@ -117,6 +118,13 @@ class CircuitGame:
 
                     else:
                         gv.ambientSprk = True
+
+                if event.key == pygame.K_F1:
+                    if gv.showFPS:
+                        gv.showFPS = False
+
+                    else:
+                        gv.showFPS = True
 
                 if event.key == pygame.K_f:
                     gv.frame = True
@@ -158,6 +166,9 @@ class CircuitGame:
                     gv.width = gv.GameF.sizeX
                     gv.height = gv.GameF.sizeY
 
+                if event.type == pygame.K_ESCAPE:
+                    pygame.display.quit(), sys.exit()
+
             if event.type == pygame.QUIT:
                 pygame.display.quit(), sys.exit()
 
@@ -184,7 +195,11 @@ class CircuitGame:
 
             for row in range(1, gv.height):
                 pygame.draw.line(gv.screen, "dark green", (0, row * gv.sizeFactor), (gv.width * gv.sizeFactor, row * gv.sizeFactor))
-        #fps
+
+        if gv.showFPS:
+            fps = str(int(clock.get_fps()))
+            fpsDisplay = gv.font.render(fps + "   FPS", 1, pygame.Color("light blue"))
+            gv.screen.blit(fpsDisplay, (5, 0))
 def main():
     Circuit = CircuitGame()
     notNew = True

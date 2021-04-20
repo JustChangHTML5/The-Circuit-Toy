@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='The Circuit Toy',
-    version='1.1.1',
+    version='1.2.1',
     packages=[''],
     url='',
     license='',
@@ -18,3 +18,7 @@ setup(
 #1.1.0, And Gates!
 
 #1.1.1, Not Gates!
+
+#1.2.0, Ambient Sparks
+
+#1.2.1, FPS(Github)
