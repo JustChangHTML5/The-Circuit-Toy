@@ -3,3 +3,4 @@ rm -rf dist build
 pyinstaller --onefile -w main.py
 copy *.txt dist
 copy *.jpg dist
+copy *.ttf dist

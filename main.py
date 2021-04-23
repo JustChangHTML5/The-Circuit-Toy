@@ -6,7 +6,7 @@ clock = pygame.time.Clock()
 
 gv.Game.NodesData = gv.GameF.NodesData
 
-# key0 = board, key1 = trans, key2 = sprk, key3 = battery, key4 = andGate, key5 = andsprk, key6 = notGate, key7 = notsprk, key8 = backtrans, key9 = backtrans2, key10 = deleter, key11 = sprkDel
+# key0 = board, key1 = trans, key2 = sprk, key3 = battery, key4 = andGate, key5 = andsprk, key6 = notGate, key7 = notsprk, key8 = backtrans, key9 = backtrans2, key10 = deleter, key11 = sprkDel, key12 = blownDel
 
 class CircuitGame:
     def __init__(self):
@@ -77,9 +77,19 @@ class CircuitGame:
         else:
             return node
 
+        if node.key == 12:
+            node.key = 0
+
+        if node.key == 11:
+            node.key = 12
+
         for neighbor in neighbors:
-            if neighbor == 11:
-                node.key = 0
+            if neighbor == 11 or neighbor == 12:
+                if gv.ambientBMBS:
+                    node.key = 12
+
+                else:
+                    node.key = 0
                 break
 
         return node
@@ -160,6 +170,13 @@ class CircuitGame:
                     else:
                         gv.showGrid = True
 
+                if event.key == pygame.K_m:
+                    if gv.ambientBMBS:
+                        gv.ambientBMBS = False
+
+                    else:
+                        gv.ambientBMBS = True
+
                 if event.key == pygame.K_s:
                     gv.GameF.save("CircuitSave")
                     gv.GameF.save("CircuitSaveBackup")
@@ -176,7 +193,7 @@ class CircuitGame:
                     gv.width = gv.GameF.sizeX
                     gv.height = gv.GameF.sizeY
 
-                if event.type == pygame.K_ESCAPE:
+                if event.key == pygame.K_ESCAPE:
                     pygame.display.quit(), sys.exit()
 
             if event.type == pygame.QUIT:

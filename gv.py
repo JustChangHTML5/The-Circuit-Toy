@@ -10,6 +10,7 @@ frame = False
 showGrid = True
 showFPS = False
 ambientSprk = True
+ambientBMBS = False
 boardColor = (0, 0, 0)
 transColor = (127, 127, 127)
 andColor = (127, 127, 230)
