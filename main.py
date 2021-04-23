@@ -85,12 +85,13 @@ class CircuitGame:
 
         for neighbor in neighbors:
             if neighbor == 11 or neighbor == 12:
-                if gv.ambientBMBS:
+                if gv.ambientBMBS and node.key != 0:
                     node.key = 12
+                    break
 
                 else:
                     node.key = 0
-                break
+                    break
 
         return node
 
@@ -218,6 +219,9 @@ class CircuitGame:
 
             elif gv.GameF.get(node.Xm, node.Ym).key == 10:
                 pygame.draw.rect(gv.screen, gv.deletColor, ((node.Xm - 1) * gv.sizeFactor, (node.Ym - 1) * gv.sizeFactor, gv.sizeFactor, gv.sizeFactor))
+
+            elif gv.GameF.get(node.Xm, node.Ym).key == 12:
+                pygame.draw.rect(gv.screen, gv.ashesColor, ((node.Xm - 1) * gv.sizeFactor, (node.Ym - 1) * gv.sizeFactor, gv.sizeFactor, gv.sizeFactor))
 
         if gv.showGrid:
             for column in range(1, gv.width):
