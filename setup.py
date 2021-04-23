@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='The Circuit Toy',
-    version='1.2.1',
+    version='1.3.0',
     packages=[''],
     url='',
     license='',
@@ -21,4 +21,6 @@ setup(
 
 #1.2.0, Ambient Sparks
 
-#1.2.1, FPS(Github)
+#1.2.1, FPS
+
+#1.3.0, bombs affected by ambientSprk

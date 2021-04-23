@@ -6,7 +6,7 @@ clock = pygame.time.Clock()
 
 gv.Game.NodesData = gv.GameF.NodesData
 
-# key0 = board, key1 = trans, key2 = sprk, key3 = battery, key4 = andGate, key5 = andsprk, key6 = notGate, key7 = notsprk, key8 = backtrans, key9 = backtrans2
+# key0 = board, key1 = trans, key2 = sprk, key3 = battery, key4 = andGate, key5 = andsprk, key6 = notGate, key7 = notsprk, key8 = backtrans, key9 = backtrans2, key10 = deleter, key11 = sprkDel
 
 class CircuitGame:
     def __init__(self):
@@ -35,7 +35,7 @@ class CircuitGame:
             if node.key == 9:
                 node.key = 8
 
-            if node.key == 2 or node.key == 5 or node.key == 7:
+            if node.key == 2 or node.key == 5 or node.key == 7 or node.key == 11:
                 if 2 not in neighbors or 3 not in neighbors or 5 not in neighbors or 7 not in neighbors:
                     if node.key != 2:
                         node.key -= 1
@@ -43,9 +43,9 @@ class CircuitGame:
                     else:
                         node.key = 9
 
-            if node.key == 1:
-                if 2 in neighbors or 3 in neighbors or 5 in neighbors or 7 in neighbors:
-                    node.key = 2
+            if node.key == 1 or node.key == 10:
+                if 2 in neighbors or 3 in neighbors or 5 in neighbors or 7 in neighbors or 11 in neighbors:
+                    node.key += 1
 
             if node.key == 4 or node.key == 5:
                 check = 0
@@ -76,6 +76,11 @@ class CircuitGame:
 
         else:
             return node
+
+        for neighbor in neighbors:
+            if neighbor == 11:
+                node.key = 0
+                break
 
         return node
 
@@ -143,6 +148,11 @@ class CircuitGame:
                     Nx, Ny = math.ceil(Mx / gv.sizeFactor), math.ceil(My / gv.sizeFactor)
                     gv.GameF.get(Nx, Ny).key = 6
 
+                if event.key == pygame.K_d:
+                    (Mx, My) = pygame.mouse.get_pos()
+                    Nx, Ny = math.ceil(Mx / gv.sizeFactor), math.ceil(My / gv.sizeFactor)
+                    gv.GameF.get(Nx, Ny).key = 10
+
                 if event.key == pygame.K_g:
                     if gv.showGrid:
                         gv.showGrid = False
@@ -177,7 +187,7 @@ class CircuitGame:
             if gv.GameF.get(node.Xm, node.Ym).key == 1:
                 pygame.draw.rect(gv.screen, gv.transColor, ((node.Xm - 1) * gv.sizeFactor, (node.Ym - 1) * gv.sizeFactor, gv.sizeFactor, gv.sizeFactor))
 
-            elif gv.GameF.get(node.Xm, node.Ym).key == 2 or gv.GameF.get(node.Xm, node.Ym).key == 5 or gv.GameF.get(node.Xm, node.Ym).key == 7 or gv.GameF.get(node.Xm, node.Ym).key == 8 or gv.GameF.get(node.Xm, node.Ym).key == 9:
+            elif gv.GameF.get(node.Xm, node.Ym).key == 2 or gv.GameF.get(node.Xm, node.Ym).key == 5 or gv.GameF.get(node.Xm, node.Ym).key == 7 or gv.GameF.get(node.Xm, node.Ym).key == 8 or gv.GameF.get(node.Xm, node.Ym).key == 9 or gv.GameF.get(node.Xm, node.Ym).key == 11:
                 pygame.draw.rect(gv.screen, gv.sprkColor, ((node.Xm - 1) * gv.sizeFactor, (node.Ym - 1) * gv.sizeFactor, gv.sizeFactor, gv.sizeFactor))
 
             elif gv.GameF.get(node.Xm, node.Ym).key == 3:
@@ -188,6 +198,9 @@ class CircuitGame:
 
             elif gv.GameF.get(node.Xm, node.Ym).key == 6:
                 pygame.draw.rect(gv.screen, gv.notColor, ((node.Xm - 1) * gv.sizeFactor, (node.Ym - 1) * gv.sizeFactor, gv.sizeFactor, gv.sizeFactor))
+
+            elif gv.GameF.get(node.Xm, node.Ym).key == 10:
+                pygame.draw.rect(gv.screen, gv.deletColor, ((node.Xm - 1) * gv.sizeFactor, (node.Ym - 1) * gv.sizeFactor, gv.sizeFactor, gv.sizeFactor))
 
         if gv.showGrid:
             for column in range(1, gv.width):
