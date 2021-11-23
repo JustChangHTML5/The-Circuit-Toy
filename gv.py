@@ -4,12 +4,13 @@ pygame.init()
 
 width = 105
 height = 60
-sizeFactor = 13
+sizeFactor = 11
 isRunning = False
 frame = False
 showGrid = True
 showFPS = False
 ambientSprk = True
+ambientBMBS = False
 boardColor = (0, 0, 0)
 transColor = (127, 127, 127)
 andColor = (127, 127, 230)
@@ -17,6 +18,7 @@ notColor = (127, 230, 127)
 sprkColor = (230, 230, 0)
 batteColor = (0, 128, 128)
 deletColor = (230, 0, 0)
+ashesColor = (230, 230, 230)
 size = (width * sizeFactor, height * sizeFactor)
 screen = pygame.display.set_mode(size)
 Game = circuitMatrix.Matrix()
